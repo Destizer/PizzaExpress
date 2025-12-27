@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Заказ вкусной пиццы с доставкой на дом">
+    <meta name="theme-color" content="#ff6b35">
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="img/icon-192.png">
+
+    <title>PizzaExpress - Доставка пиццы</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__container">
+            <button class="header__burger" id="burger">
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+            </button>
+
+            <div class="header__logo">
+                <span class="header__logo-icon">🍕</span>
+                <span class="header__logo-text">PizzaExpress</span>
+            </div>
+
+            <!-- КНОПКА УСТАНОВКИ (НОВОЕ!) -->
+            <button class="install-button" id="installButton">
+                <span class="install-button__icon">📥</span>
+                <span class="install-button__text">Установить приложение</span>
+            </button>
+
+            <nav class="header__nav" id="nav">
+                <a href="index.html" class="header__nav-link header__nav-link--active">Главная</a>
+                <a href="menu.html" class="header__nav-link">Меню</a>
+                <a href="cart.html" class="header__nav-link">Корзина <span class="header__cart-count" id="cartCount">0</span></a>
+                <a href="orders.html" class="header__nav-link">Заказы</a>
+                <a href="contacts.html" class="header__nav-link">Контакты</a>
+            </nav>
+
+            <button class="header__profile" id="profileBtn">
+                <span class="header__profile-icon">👤</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero__container">
+            <h1 class="hero__title">Вкусная пицца с доставкой</h1>
+            <p class="hero__subtitle">Горячая пицца за 30 минут или бесплатно!</p>
+            <a href="menu.html" class="hero__button button button--primary">Выбрать пиццу</a>
+        </div>
+        <div class="hero__image">
+            <div class="hero__pizza-placeholder">🍕</div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="categories__container">
+            <h2 class="categories__title">Популярные категории</h2>
+            <div class="categories__grid">
+                <a href="menu.html?category=popular" class="category-card">
+                    <div class="category-card__icon">⭐</div>
+                    <h3 class="category-card__title">Популярные</h3>
+                </a>
+                <a href="menu.html?category=meat" class="category-card">
+                    <div class="category-card__icon">🥓</div>
+                    <h3 class="category-card__title">Мясные</h3>
+                </a>
+                <a href="menu.html?category=veg" class="category-card">
+                    <div class="category-card__icon">🥗</div>
+                    <h3 class="category-card__title">Вегетарианские</h3>
+                </a>
+                <a href="menu.html?category=spicy" class="category-card">
+                    <div class="category-card__icon">🌶️</div>
+                    <h3 class="category-card__title">Острые</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Pizzas -->
+    <section class="popular">
+        <div class="popular__container">
+            <h2 class="popular__title">Хиты продаж</h2>
+            <div class="popular__grid" id="popularPizzas">
+                <!-- Динамически загружается через JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="features__container">
+            <div class="feature">
+                <div class="feature__icon">🚀</div>
+                <h3 class="feature__title">Быстрая доставка</h3>
+                <p class="feature__text">30 минут или бесплатно</p>
+            </div>
+            <div class="feature">
+                <div class="feature__icon">👨‍🍳</div>
+                <h3 class="feature__title">Свежие ингредиенты</h3>
+                <p class="feature__text">Только качественные продукты</p>
+            </div>
+            <div class="feature">
+                <div class="feature__icon">💳</div>
+                <h3 class="feature__title">Удобная оплата</h3>
+                <p class="feature__text">Наличные и карты</p>
+            </div>
+            <div class="feature">
+                <div class="feature__icon">📱</div>
+                <h3 class="feature__title">Мобильное приложение</h3>
+                <p class="feature__text">Заказывайте из любого места</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__section">
+                <h3 class="footer__title">PizzaExpress</h3>
+                <p class="footer__text">Вкусная пицца с 2020 года</p>
+            </div>
+            <div class="footer__section">
+                <h3 class="footer__title">Контакты</h3>
+                <p class="footer__text">📞 +7 (800) 555-35-35</p>
+                <p class="footer__text">📧 info@pizzaexpress.ru</p>
+            </div>
+            <div class="footer__section">
+                <h3 class="footer__title">Режим работы</h3>
+                <p class="footer__text">Пн-Вс: 10:00 - 23:00</p>
+            </div>
+            <div class="footer__section">
+                <h3 class="footer__title">Социальные сети</h3>
+                <div class="footer__social">
+                    <a href="#" class="footer__social-link">VK</a>
+                    <a href="#" class="footer__social-link">Instagram</a>
+                    <a href="#" class="footer__social-link">Telegram</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2025 PizzaExpress. Лабораторная работа №4</p>
+        </div>
+    </footer>
+
+    <!-- Bottom Navigation (Mobile) -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav__item bottom-nav__item--active">
+            <span class="bottom-nav__icon">🏠</span>
+            <span class="bottom-nav__label">Главная</span>
+        </a>
+        <a href="menu.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">📋</span>
+            <span class="bottom-nav__label">Меню</span>
+        </a>
+        <a href="cart.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">🛒</span>
+            <span class="bottom-nav__label">Корзина</span>
+        </a>
+        <a href="orders.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">📦</span>
+            <span class="bottom-nav__label">Заказы</span>
+        </a>
+        <a href="profile.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">👤</span>
+            <span class="bottom-nav__label">Профиль</span>
+        </a>
+    </nav>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Регистрация Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('Service Worker зарегистрирован', reg))
+                .catch(err => console.log('Ошибка регистрации SW', err));
+        }
+    </script>
+</body>
+</html>

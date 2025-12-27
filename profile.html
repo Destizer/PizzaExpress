@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b35">
+    <link rel="manifest" href="manifest.json">
+    <title>Профиль - PizzaExpress</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <button class="header__burger" id="burger">
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+            </button>
+
+            <div class="header__logo">
+                <span class="header__logo-icon">🍕</span>
+                <span class="header__logo-text">PizzaExpress</span>
+            </div>
+
+            <nav class="header__nav" id="nav">
+                <a href="index.html" class="header__nav-link">Главная</a>
+                <a href="menu.html" class="header__nav-link">Меню</a>
+                <a href="cart.html" class="header__nav-link">Корзина <span class="header__cart-count" id="cartCount">0</span></a>
+                <a href="orders.html" class="header__nav-link">Заказы</a>
+                <a href="contacts.html" class="header__nav-link">Контакты</a>
+            </nav>
+
+            <button class="header__profile" id="profileBtn">
+                <span class="header__profile-icon">👤</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="profile">
+        <div class="profile__container">
+            <h1 class="profile__title">Профиль</h1>
+
+            <!-- Информация о пользователе -->
+            <section class="profile__section">
+                <div class="profile__avatar">
+                    <div class="profile__avatar-icon">👤</div>
+                    <button class="profile__avatar-edit">Изменить фото</button>
+                </div>
+
+                <form class="profile__form" id="profileForm">
+                    <h2 class="profile__section-title">Личные данные</h2>
+
+                    <div class="form-group">
+                        <label class="form-group__label" for="profileName">Имя</label>
+                        <input type="text"
+                               class="form-group__input"
+                               id="profileName"
+                               placeholder="Иван Иванов">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group__label" for="profilePhone">Телефон</label>
+                        <input type="tel"
+                               class="form-group__input"
+                               id="profilePhone"
+                               placeholder="+7 (___) ___-__-__">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group__label" for="profileEmail">Email</label>
+                        <input type="email"
+                               class="form-group__input"
+                               id="profileEmail"
+                               placeholder="example@mail.ru">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group__label" for="profileBirthday">Дата рождения</label>
+                        <input type="date"
+                               class="form-group__input"
+                               id="profileBirthday">
+                    </div>
+
+                    <button type="submit" class="button button--primary">
+                        Сохранить изменения
+                    </button>
+                </form>
+            </section>
+
+            <!-- Адреса доставки -->
+            <section class="profile__section">
+                <h2 class="profile__section-title">Адреса доставки</h2>
+
+                <div class="addresses" id="addressesList">
+                    <div class="address-card">
+                        <div class="address-card__header">
+                            <span class="address-card__label">Дом</span>
+                            <button class="address-card__edit" onclick="editAddress(0)">✏️</button>
+                        </div>
+                        <p class="address-card__text">ул. Примерная, д. 123, кв. 45</p>
+                    </div>
+                </div>
+
+                <button class="button button--secondary" id="addAddressBtn">
+                    + Добавить адрес
+                </button>
+            </section>
+
+            <!-- Настройки уведомлений -->
+            <section class="profile__section">
+                <h2 class="profile__section-title">Уведомления</h2>
+
+                <div class="settings">
+                    <label class="settings__item">
+                        <input type="checkbox" class="settings__checkbox" id="notifEmail" checked>
+                        <span class="settings__label">Email уведомления</span>
+                    </label>
+
+                    <label class="settings__item">
+                        <input type="checkbox" class="settings__checkbox" id="notifPush" checked>
+                        <span class="settings__label">Push уведомления</span>
+                    </label>
+
+                    <label class="settings__item">
+                        <input type="checkbox" class="settings__checkbox" id="notifPromo" checked>
+                        <span class="settings__label">Акции и скидки</span>
+                    </label>
+
+                    <label class="settings__item">
+                        <input type="checkbox" class="settings__checkbox" id="notifNews">
+                        <span class="settings__label">Новости и обновления</span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Статистика -->
+            <section class="profile__section">
+                <h2 class="profile__section-title">Статистика</h2>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="statsOrders">0</div>
+                        <div class="stat-card__label">Заказов</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="statsTotal">0 ₽</div>
+                        <div class="stat-card__label">Потрачено</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="statsFavorite">—</div>
+                        <div class="stat-card__label">Любимая пицца</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Кнопка выхода -->
+            <button class="profile__logout button button--danger">
+                Выйти из аккаунта
+            </button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__section">
+                <h3 class="footer__title">PizzaExpress</h3>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2025 PizzaExpress</p>
+        </div>
+    </footer>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">🏠</span>
+            <span class="bottom-nav__label">Главная</span>
+        </a>
+        <a href="menu.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">📋</span>
+            <span class="bottom-nav__label">Меню</span>
+        </a>
+        <a href="cart.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">🛒</span>
+            <span class="bottom-nav__label">Корзина</span>
+        </a>
+        <a href="orders.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">📦</span>
+            <span class="bottom-nav__label">Заказы</span>
+        </a>
+        <a href="profile.html" class="bottom-nav__item bottom-nav__item--active">
+            <span class="bottom-nav__icon">👤</span>
+            <span class="bottom-nav__label">Профиль</span>
+        </a>
+    </nav>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Загрузка профиля
+        function loadProfile() {
+            const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+
+            if (profile.name) document.getElementById('profileName').value = profile.name;
+            if (profile.phone) document.getElementById('profilePhone').value = profile.phone;
+            if (profile.email) document.getElementById('profileEmail').value = profile.email;
+            if (profile.birthday) document.getElementById('profileBirthday').value = profile.birthday;
+        }
+
+        // Сохранение профиля
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const profile = {
+                name: document.getElementById('profileName').value,
+                phone: document.getElementById('profilePhone').value,
+                email: document.getElementById('profileEmail').value,
+                birthday: document.getElementById('profileBirthday').value
+            };
+
+            localStorage.setItem('profile', JSON.stringify(profile));
+            alert('Профиль успешно сохранен!');
+        });
+
+        // Статистика
+        function loadStats() {
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+
+            document.getElementById('statsOrders').textContent = orders.length;
+
+            const total = orders.reduce((sum, order) => sum + order.total, 0);
+            document.getElementById('statsTotal').textContent = total + ' ₽';
+
+            // Любимая пицца
+            const pizzaCounts = {};
+            orders.forEach(order => {
+                order.items.forEach(item => {
+                    pizzaCounts[item.name] = (pizzaCounts[item.name] || 0) + item.quantity;
+                });
+            });
+
+            const favorite = Object.keys(pizzaCounts).reduce((a, b) =>
+                pizzaCounts[a] > pizzaCounts[b] ? a : b, '—'
+            );
+            document.getElementById('statsFavorite').textContent = favorite;
+        }
+
+        loadProfile();
+        loadStats();
+    </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b35">
+    <link rel="manifest" href="manifest.json">
+    <title>Оформление заказа - PizzaExpress</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <a href="cart.html" class="header__back">← Назад</a>
+            <div class="header__logo">
+                <span class="header__logo-text">Оформление заказа</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="checkout">
+        <div class="checkout__container">
+            <form class="checkout__form" id="checkoutForm">
+                <!-- Шаг 1: Контактные данные -->
+                <section class="checkout__section">
+                    <h2 class="checkout__section-title">1. Контактные данные</h2>
+
+                    <div class="form-group">
+                        <label class="form-group__label" for="name">Имя *</label>
+                        <input type="text"
+                               class="form-group__input"
+                               id="name"
+                               required
+                               placeholder="Иван Иванов">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group__label" for="phone">Телефон *</label>
+                        <input type="tel"
+                               class="form-group__input"
+                               id="phone"
+                               required
+                               placeholder="+7 (___) ___-__-__">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-group__label" for="email">Email</label>
+                        <input type="email"
+                               class="form-group__input"
+                               id="email"
+                               placeholder="example@mail.ru">
+                    </div>
+                </section>
+
+                <!-- Шаг 2: Доставка -->
+                <section class="checkout__section">
+                    <h2 class="checkout__section-title">2. Доставка</h2>
+
+                    <div class="form-group">
+                        <label class="form-group__label">Способ получения *</label>
+                        <div class="radio-group">
+                            <label class="radio-group__item">
+                                <input type="radio"
+                                       name="deliveryType"
+                                       value="delivery"
+                                       checked>
+                                <span>🚗 Доставка (150 ₽)</span>
+                            </label>
+                            <label class="radio-group__item">
+                                <input type="radio"
+                                       name="deliveryType"
+                                       value="pickup">
+                                <span>🏪 Самовывоз (бесплатно)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="addressFields">
+                        <div class="form-group">
+                            <label class="form-group__label" for="street">Улица *</label>
+                            <input type="text"
+                                   class="form-group__input"
+                                   id="street"
+                                   placeholder="Ленина">
+                        </div>
+
+                        <div class="form-group form-group--inline">
+                            <div class="form-group">
+                                <label class="form-group__label" for="house">Дом *</label>
+                                <input type="text"
+                                       class="form-group__input"
+                                       id="house"
+                                       placeholder="12">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label" for="apartment">Квартира</label>
+                                <input type="text"
+                                       class="form-group__input"
+                                       id="apartment"
+                                       placeholder="45">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-group__label" for="comment">Комментарий к адресу</label>
+                            <textarea class="form-group__textarea"
+                                      id="comment"
+                                      rows="3"
+                                      placeholder="Домофон не работает, позвоните"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Шаг 3: Оплата -->
+                <section class="checkout__section">
+                    <h2 class="checkout__section-title">3. Оплата</h2>
+
+                    <div class="form-group">
+                        <label class="form-group__label">Способ оплаты *</label>
+                        <div class="radio-group">
+                            <label class="radio-group__item">
+                                <input type="radio"
+                                       name="paymentType"
+                                       value="cash"
+                                       checked>
+                                <span>💵 Наличными курьеру</span>
+                            </label>
+                            <label class="radio-group__item">
+                                <input type="radio"
+                                       name="paymentType"
+                                       value="card">
+                                <span>💳 Картой курьеру</span>
+                            </label>
+                            <label class="radio-group__item">
+                                <input type="radio"
+                                       name="paymentType"
+                                       value="online">
+                                <span>🌐 Онлайн оплата</span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Итого -->
+                <section class="checkout__summary">
+                    <h3 class="checkout__summary-title">Ваш заказ</h3>
+                    <div class="checkout__summary-items" id="orderItems"></div>
+                    <div class="checkout__summary-total">
+                        <span>Итого:</span>
+                        <span id="orderTotal">0 ₽</span>
+                    </div>
+                </section>
+
+                <button type="submit" class="button button--primary button--full">
+                    Подтвердить заказ
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Переключение между доставкой и самовывозом
+        document.querySelectorAll('[name="deliveryType"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const addressFields = document.getElementById('addressFields');
+                if (e.target.value === 'delivery') {
+                    addressFields.style.display = 'block';
+                } else {
+                    addressFields.style.display = 'none';
+                }
+            });
+        });
+
+        // Загрузка товаров из корзины
+        function loadOrderItems() {
+            const orderItems = document.getElementById('orderItems');
+            const orderTotal = document.getElementById('orderTotal');
+            const cart = window.cart || new Cart();
+
+            if (cart.items.length === 0) {
+                window.location.href = 'cart.html';
+                return;
+            }
+
+            orderItems.innerHTML = cart.items.map(item => `
+                    <div class="checkout__item">
+                        <span>${item.name} (${item.size}, ${item.dough}) x${item.quantity}</span>
+                        <span>${item.price * item.quantity} ₽</span>
+                    </div>
+                `).join('');
+
+            const deliveryType = document.querySelector('[name="deliveryType"]:checked').value;
+            const deliveryCost = deliveryType === 'delivery' ? 150 : 0;
+            const total = cart.getTotal() + deliveryCost;
+            orderTotal.textContent = total + ' ₽';
+        }
+
+        // Обработка формы
+        document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                deliveryType: document.querySelector('[name="deliveryType"]:checked').value,
+                paymentType: document.querySelector('[name="paymentType"]:checked').value,
+                street: document.getElementById('street').value,
+                house: document.getElementById('house').value,
+                apartment: document.getElementById('apartment').value,
+                comment: document.getElementById('comment').value
+            };
+
+            // Создание заказа
+            const cart = window.cart || new Cart();
+            const order = {
+                id: 'ORDER_' + Date.now(),
+                date: new Date().toISOString(),
+                items: cart.items,
+                customer: formData,
+                total: cart.getTotal() + (formData.deliveryType === 'delivery' ? 150 : 0),
+                status: 'pending'
+            };
+
+            // Сохранение заказа
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            // Очистка корзины
+            cart.clear();
+
+            // Перенаправление
+            alert('Заказ успешно оформлен! Номер заказа: ' + order.id);
+            window.location.href = 'orders.html';
+        });
+
+        // Инициализация
+        loadOrderItems();
+    </script>
+</body>
+</html>

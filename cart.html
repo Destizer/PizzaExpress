@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Корзина покупок">
+    <meta name="theme-color" content="#ff6b35">
+    <link rel="manifest" href="manifest.json">
+    <title>Корзина - PizzaExpress</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <button class="header__burger" id="burger">
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+            </button>
+
+            <div class="header__logo">
+                <span class="header__logo-icon">🍕</span>
+                <span class="header__logo-text">PizzaExpress</span>
+            </div>
+
+            <nav class="header__nav" id="nav">
+                <a href="index.html" class="header__nav-link">Главная</a>
+                <a href="menu.html" class="header__nav-link">Меню</a>
+                <a href="cart.html" class="header__nav-link header__nav-link--active">Корзина <span class="header__cart-count" id="cartCount">0</span></a>
+                <a href="orders.html" class="header__nav-link">Заказы</a>
+                <a href="contacts.html" class="header__nav-link">Контакты</a>
+            </nav>
+
+            <button class="header__profile" id="profileBtn">
+                <span class="header__profile-icon">👤</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="cart-page">
+        <div class="cart-page__container">
+            <h1 class="cart-page__title">Корзина</h1>
+
+            <!-- Корзина с товарами -->
+            <div class="cart-page__content" id="cartContent">
+                <div class="cart-items" id="cartItems">
+                    <!-- Динамически загружается -->
+                </div>
+
+                <div class="cart-summary">
+                    <h3 class="cart-summary__title">Итого</h3>
+
+                    <div class="cart-summary__row">
+                        <span class="cart-summary__label">Товары:</span>
+                        <span class="cart-summary__value" id="itemsCount">0</span>
+                    </div>
+
+                    <div class="cart-summary__row">
+                        <span class="cart-summary__label">Сумма:</span>
+                        <span class="cart-summary__value" id="subtotal">0 ₽</span>
+                    </div>
+
+                    <div class="cart-summary__row">
+                        <span class="cart-summary__label">Доставка:</span>
+                        <span class="cart-summary__value" id="delivery">150 ₽</span>
+                    </div>
+
+                    <div class="cart-summary__row cart-summary__row--total">
+                        <span class="cart-summary__label">К оплате:</span>
+                        <span class="cart-summary__value" id="total">0 ₽</span>
+                    </div>
+
+                    <button class="cart-summary__button button button--primary" id="checkoutBtn">
+                        Оформить заказ
+                    </button>
+
+                    <button class="cart-summary__clear" id="clearCartBtn">
+                        Очистить корзину
+                    </button>
+                </div>
+            </div>
+
+            <!-- Пустая корзина -->
+            <div class="cart-page__empty" id="emptyCart" style="display: none;">
+                <div class="cart-page__empty-icon">🛒</div>
+                <h3 class="cart-page__empty-title">Корзина пуста</h3>
+                <p class="cart-page__empty-text">Добавьте пиццу из меню</p>
+                <a href="menu.html" class="button button--primary">Перейти в меню</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__section">
+                <h3 class="footer__title">PizzaExpress</h3>
+                <p class="footer__text">Вкусная пицца с 2020 года</p>
+            </div>
+            <div class="footer__section">
+                <h3 class="footer__title">Контакты</h3>
+                <p class="footer__text">📞 +7 (800) 555-35-35</p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2025 PizzaExpress</p>
+        </div>
+    </footer>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">🏠</span>
+            <span class="bottom-nav__label">Главная</span>
+        </a>
+        <a href="menu.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">📋</span>
+            <span class="bottom-nav__label">Меню</span>
+        </a>
+        <a href="cart.html" class="bottom-nav__item bottom-nav__item--active">
+            <span class="bottom-nav__icon">🛒</span>
+            <span class="bottom-nav__label">Корзина</span>
+        </a>
+        <a href="orders.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">📦</span>
+            <span class="bottom-nav__label">Заказы</span>
+        </a>
+        <a href="profile.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">👤</span>
+            <span class="bottom-nav__label">Профиль</span>
+        </a>
+    </nav>
+
+    <script src="js/app.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

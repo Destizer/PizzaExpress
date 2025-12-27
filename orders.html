@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b35">
+    <link rel="manifest" href="manifest.json">
+    <title>Мои заказы - PizzaExpress</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <button class="header__burger" id="burger">
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+                <span class="header__burger-line"></span>
+            </button>
+
+            <div class="header__logo">
+                <span class="header__logo-icon">🍕</span>
+                <span class="header__logo-text">PizzaExpress</span>
+            </div>
+
+            <nav class="header__nav" id="nav">
+                <a href="index.html" class="header__nav-link">Главная</a>
+                <a href="menu.html" class="header__nav-link">Меню</a>
+                <a href="cart.html" class="header__nav-link">Корзина <span class="header__cart-count" id="cartCount">0</span></a>
+                <a href="orders.html" class="header__nav-link header__nav-link--active">Заказы</a>
+                <a href="contacts.html" class="header__nav-link">Контакты</a>
+            </nav>
+
+            <button class="header__profile" id="profileBtn">
+                <span class="header__profile-icon">👤</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="orders">
+        <div class="orders__container">
+            <h1 class="orders__title">Мои заказы</h1>
+
+            <div class="orders__list" id="ordersList">
+                <!-- Динамически загружается -->
+            </div>
+
+            <div class="orders__empty" id="emptyOrders" style="display: none;">
+                <div class="orders__empty-icon">📦</div>
+                <h3 class="orders__empty-title">У вас пока нет заказов</h3>
+                <p class="orders__empty-text">Оформите первый заказ прямо сейчас!</p>
+                <a href="menu.html" class="button button--primary">Перейти в меню</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__section">
+                <h3 class="footer__title">PizzaExpress</h3>
+                <p class="footer__text">Вкусная пицца с 2020 года</p>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>&copy; 2025 PizzaExpress</p>
+        </div>
+    </footer>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">🏠</span>
+            <span class="bottom-nav__label">Главная</span>
+        </a>
+        <a href="menu.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">📋</span>
+            <span class="bottom-nav__label">Меню</span>
+        </a>
+        <a href="cart.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">🛒</span>
+            <span class="bottom-nav__label">Корзина</span>
+        </a>
+        <a href="orders.html" class="bottom-nav__item bottom-nav__item--active">
+            <span class="bottom-nav__icon">📦</span>
+            <span class="bottom-nav__label">Заказы</span>
+        </a>
+        <a href="profile.html" class="bottom-nav__item">
+            <span class="bottom-nav__icon">👤</span>
+            <span class="bottom-nav__label">Профиль</span>
+        </a>
+    </nav>
+
+    <script src="js/app.js"></script>
+    <script>
+        function loadOrders() {
+            const ordersList = document.getElementById('ordersList');
+            const emptyOrders = document.getElementById('emptyOrders');
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+
+            if (orders.length === 0) {
+                ordersList.style.display = 'none';
+                emptyOrders.style.display = 'block';
+                return;
+            }
+
+            ordersList.style.display = 'block';
+            emptyOrders.style.display = 'none';
+
+            // Сортируем по дате (новые сверху)
+            orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            ordersList.innerHTML = orders.map(order => {
+                const date = new Date(order.date);
+                const dateStr = date.toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                const statusLabels = {
+                    'pending': { text: 'В обработке', class: 'warning' },
+                    'confirmed': { text: 'Подтвержден', class: 'info' },
+                    'cooking': { text: 'Готовится', class: 'info' },
+                    'delivery': { text: 'В доставке', class: 'info' },
+                    'completed': { text: 'Доставлен', class: 'success' },
+                    'cancelled': { text: 'Отменен', class: 'danger' }
+                };
+
+                const status = statusLabels[order.status] || statusLabels.pending;
+
+                return `
+                        <div class="order-card">
+                            <div class="order-card__header">
+                                <div class="order-card__info">
+                                    <h3 class="order-card__number">Заказ ${order.id}</h3>
+                                    <p class="order-card__date">${dateStr}</p>
+                                </div>
+                                <span class="order-card__status order-card__status--${status.class}">
+                                    ${status.text}
+                                </span>
+                            </div>
+
+                            <div class="order-card__items">
+                                ${order.items.map(item => `
+                                    <div class="order-card__item">
+                                        <span class="order-card__item-icon">${item.image || '🍕'}</span>
+                                        <span class="order-card__item-name">${item.name} (${item.size})</span>
+                                        <span class="order-card__item-quantity">x${item.quantity}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div class="order-card__footer">
+                                <span class="order-card__total">Итого: ${order.total} ₽</span>
+                                <button class="order-card__button button button--secondary"
+                                        onclick="repeatOrder('${order.id}')">
+                                    Повторить заказ
+                                </button>
+                            </div>
+                        </div>
+                    `;
+            }).join('');
+        }
+
+        function repeatOrder(orderId) {
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const order = orders.find(o => o.id === orderId);
+
+            if (!order) return;
+
+            const cart = window.cart || new Cart();
+
+            order.items.forEach(item => {
+                cart.addItem(item, item.size, item.dough);
+            });
+
+            window.location.href = 'cart.html';
+        }
+
+        window.repeatOrder = repeatOrder;
+        loadOrders();
+    </script>
+</body>
+</html>
